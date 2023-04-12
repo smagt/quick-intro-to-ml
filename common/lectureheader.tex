@@ -1,0 +1,113 @@
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{bayesnet}
+
+\usefonttheme[onlymath]{serif}
+\usepackage[ansinew]{inputenc}      % direkte Eingabe von Umlauten
+\usepackage{graphicx}   % picture inclusion
+\usepackage{amsmath}    % extended math stuff
+\usepackage{amsfonts}   % corresponding fonts
+\usepackage{bm}         % improved Greek bold math
+
+\usepackage[english]{babel}
+
+\usepackage[square]{natbib}  % reference 
+\usepackage{booktabs}
+\usepackage{ae}          % PDF-compatible fonts
+
+\setbeamertemplate{footline}[frame number]
+
+\newcommand{\imgcrop}[4]{  % filename, title, boxwidth, viewport
+\centering\begin{beamerboxesrounded}[upper=fig,lower=block body,width=#3,shadow=true]{#2}
+\includegraphics[width=\textwidth,viewport=#4]{pics/#1}
+\end{beamerboxesrounded}
+}
+\newcommand{\imgbox}[3]{   % filename, title, boxwidth
+\centering\begin{beamerboxesrounded}[upper=fig,lower=block body,width=#3,shadow=true]{#2}
+\includegraphics[width=\textwidth]{pics/#1}
+\end{beamerboxesrounded}
+}
+
+\newenvironment{poll}
+{\begin{frame}<handout:0>
+\frametitle{poll}
+	\color[rgb]{0,.3,0}}
+{\end{frame}}
+
+
+\usetheme{Boadilla}
+\usecolortheme[rgb={0,0.4,0}]{structure}
+  \setbeamertemplate{enumerate items}[square]
+  \setbeamertemplate{itemize items}[square]
+
+\author{Patrick van der Smagt}
+\hypersetup{%
+	pdfauthor={Patrick van der Smagt}%
+}
+
+
+\def\target{z}
+
+
+%\newcommand{\be}{\begin{equation}}
+%\newcommand{\bel}[1]{\begin{equation}\label{#1}}
+%\newcommand{\ee}{\end{equation}}
+\newcommand*\abs[1]{\left\lvert#1\right\rvert}      % absolute value
+\newcommand*\avg[1]{\left<#1\right>}                % average
+\newcommand*\C{\mathcal{C}}                         % class C (for classification)
+
+\let\orid=\d %for lower dot accent use \orid now
+\renewcommand*\d[3][]{                              % differetial quotient
+  \def\next{#1}%
+  \ifx\empty\next
+    \frac{\text{d}#2}{\text{d} #3}
+  \else
+    \frac{{\text{d}#2}^{#1}}{\text{d}^{#1} #3}
+  \fi}
+\newcommand*\D[3][]{                                % partial derivative
+  \def\next{#1}%
+  \ifx\empty\next
+    \frac{\partial#2}{\partial #3}
+  \else
+    \frac{{\partial#2}^{#1}}{\partial^{#1} #3}
+  \fi}
+\newcommand{\Def}[1]{\alert{#1}}                    % first occurrence of a new term
+\newcommand{\Annot}[1]{\qquad\text{#1}}             % annotation in (short) equation
+\newcommand{\Set}[1]{\mathcal{#1}}                  % mathematical set
+\newcommand*\Det[1]{\left\lvert#1\right\rvert}      % determinant
+\newcommand*\diff{\text{d}}                         % differential
+\newcommand*\DX{\,\text{d}x}                         % differential dx
+\newcommand*\DY{\,\text{d}y}                         % differential dy
+\newcommand*\E{\mathbb{E}}  % expectation value
+\renewcommand*\H{\mathrm{H}}                          % Entropy
+\newcommand*\KL{\mathrm{KL}}                        % Kullback-Leibler divergence
+\newcommand\imagi{\text{i}}                         % \sqrt{-1} == \imagi (imaginary)
+\newcommand*\Mtx[1]{\bm{{#1}}}                      % matrix quantity
+\newcommand{\Norm}[1]{\lVert#1\rVert}               % norm of a matrix or vector
+\newcommand*\N{\mathcal{N}}                         % Normal distribution
+\newcommand*\Nset{\mathbb{N}}                       % set of natural numbers
+\newcommand\Order[1]{\mathcal{O}(#1)}               % order operator
+\newcommand\nate{\text{e}}                          % base of ln == \exp (natural e)
+\newcommand*\Operator[1]{\mathcal{#1}}              % operator quantity
+\newcommand{\ParBeg}[1]{\structure{#1}}             % new paragraph, similar to description
+\newcommand*\Q{\mathbb{Q}}                          % set Q {rational numbers}
+\newcommand*\R{\mathbb{R}}                          % set R {real numbers}
+\newcommand*\T{^{\text{T}}}                         % transpose
+\newcommand*\Tensor[1]{\bm{\mathsf{#1}}}            % tensor quantity
+\newcommand{\var}{\text{var}}
+\renewcommand*\Vec[1]{\bm{{#1}}}                    % vector quantity
+
+\newcommand*\Z{\mathbb{Z}}                          % set Z {... -1, 0, 1, ...}
+
+\newcommand{\mub}{\Vec{\mu}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand*\F{\mathcal{F}}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+
+\newcommand\keyword[1]{\textbf{$\rightarrow$ #1}}
+
+
+
+\def\function{f}
+\def\model{\hat\function}
