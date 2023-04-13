@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "patricks intro to ml, 2023-03"
+version = "0.1.0"
+description = ""
+authors = ["Patrick van der Smagt"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.11"
+scikit-learn = "^1.2.2"
+jupyter_client = "<8" #solve problem with vscode
+pyzmq = "<25" #solve problem with vscode
+jupyter = "^1.0.0"
+ipykernel = "^6.22.0"
+lightning = "<2.0.0"
+torch = "<2.0.0"
+pydantic = "<1.8.0"
+fastapi = ">=0.80"
+torch-tb-profiler = "^0.4.1"
+torchvision = "0.14.1"
+pytorch_lightning = "<2.0.0"
+lightning-bolts = "^0.6.0.post1"
+
+[tool.poetry.group.dev.dependencies]
+matplotlib = "^3.7.1"
+numpy = "^1.24.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
