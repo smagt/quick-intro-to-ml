@@ -42,14 +42,6 @@
 \end{frame}
 
 
-
-
-
-
-
-
-
-
 \begin{frame}
     \frametitle{A noisy real-valued function}
     
@@ -303,18 +295,6 @@ until stopping criterion satisfied
 
 
 
-%%%%%%%%%%%%
-%%%%%%%%%%%%
-%%%%%%%%%%%%
-%%%%%%%%%%%%
-%%%%%%%%%%%%
-%%%%%%%%%%%%
-%%%%%%%%%%%%
-%%%%%%%%%%%%
-%%%%%%%%%%%%
-%%%%%%%%%%%%
-
-
 \begin{frame}
 \frametitle{how to reduce $E$}
 In the optimisation class, we dealt with many ways to optimise the error:
@@ -328,21 +308,7 @@ In the optimisation class, we dealt with many ways to optimise the error:
 \end{frame}
 
 
-%\begin{frame}
-%\frametitle{Hessian-free optimisation}
-%Ideally, we reduce the error $E$ by following $\Vec w$ using Newton's method: 
-%$$\Vec w \leftarrow \Vec w - H^{-1}  \nabla E$$
-%where $u = H^{-1} \nabla E$ is the search direction.  We are trying to find $u$.  
-%\pause
-%We can compute $\nabla E$, but computing $H$ costs $O(N^2)$, $H^{-1}$ costs $O(N^3)$.
-%
-%Hessian-free optimisation uses the following trick:  $u = H^{-1} \nabla E$ solves to
-%$$ H u = \nabla E$$
-%We can find $p$ by solving
-%$$  \| Hu - \nabla E\| = 0 $$
-%where a method (Pearlmutter 1994 has a better one) to compute $Hu$ is
-%$$ Hu = \lim_{\varepsilon \rightarrow 0} {\nabla E(\Vec w+\varepsilon) - \nabla E(\Vec w)\over \varepsilon}$$
-%\end{frame}
+
 \begin{frame}
 \frametitle{Hessian-free optimisation}
 Normal second-order optimisation methods require the computation of the Hessian or of its inverse (Newton methods), or at least an approximation thereof (quasi-Newton methods).  The cost of this computation as well as of its storage is high, as $H$ is quadratic in the number of parameters (weights) of the neural network.
@@ -396,31 +362,6 @@ Now we can find $\bfu$ by optimising Eq.~(\ref{eq:HFopt}) using, e.g., linear CG
 
 
 
-%\frame{\frametitle{choosing the best hidden layer size $N_{h}$}
-%Just like in generalised linear regression, for a typical toy problem we may get something like this:
-%\bigskip
-%
-%\begin{center}
-%	\includegraphics[width=0.33\textwidth]{pics/Figure5_9a.pdf}
-%	\includegraphics[width=0.33\textwidth]{pics/Figure5_9b.pdf}
-%	\includegraphics[width=0.33\textwidth]{pics/Figure5_9c.pdf}
-%\end{center}
-%
-%\begin{columns}
-%\begin{column}{6cm}
-%\pause
-%Methods exist (Barron, 1991; Vysniauskas, 1993) which estimate the optimal number
-%of hidden units $N_{h}$ and number of samples $p$ by fitting the approximation error $E$ as
-%$$
-%  E(p, N_h) \approx  \sum_{p} \sum_{i+j=p} {\gamma_{ij} \over p^i N_{h}^j}
-%\ee  
-%\end{column}
-%\begin{column}{4cm}
-%\includegraphics[width=4cm]{pics/minimal-resources}
-%\end{column}
-%\end{columns}
-%}
-
 
 \frame{\frametitle{weight decay}
 \ParBeg{recap:} in Bayesian linear regression, assuming a Gaussian prior for the weights $\Vec{w}$ lead to a quadratic regularisation term in the log likelihood. 
@@ -450,26 +391,6 @@ early stopping is probably the most widely used regularisation technique for MLP
 
 \ParBeg{Note:} In typical applications, use about 10\% to 25\% of the data for testing.  Equivalence to weight decay can be argued.
 }
-
-%\frame{\frametitle{early stopping and weight decay}
-%A typical training algorithm follows the steepest gradient first, starting with weights near zero:
-%
-%\includegraphics[width=0.45\textwidth]{pics/Figure5_13.pdf}\hfill
-%\includegraphics<2->[width=0.45\textwidth]{pics/Figure3_15.pdf}
-%
-%\onslide<2-> 
-%We follow a trajectory in weight space and stop at $\widetilde{\Vec{w}}$, when the validation set tells us so. 
-%In effect, this moves the weight to $\widetilde{\Vec{w}}$ along an ev of $\nabla^2E$ with small ev. The increase in $E$ is small but the decrease in $|\bfw|$ large!
-%
-%This is approximately the same location as $\Vec{w}_\text{MAP}$! With learning rate $\alpha$ and iteration $t$, it can be shown (under some conditions) that
-%\alert{$\alpha t \propto \lambda^{-1}$}.
-%
-%}
-
-
-
-
-
 
 
 
@@ -934,117 +855,6 @@ You will find Reichardt detectors in V1.   Yet
 
 
 
-%\frame{\frametitle{the transfer function}
-%  \begin{columns}
-%    \begin{column}{5.0cm}
-%The response of a simulated neuron to its activation $a_j$ is given by a \alert{transfer function}
-%$$
-%o_j = \phi_j(a_j)
-%$$
-%\vfill
-%    \end{column}
-%    \begin{column}{4.0cm}
-%			\hfill\imgbox{trafctneuron}{}{4.0cm}
-%		\end{column}
-%  \end{columns}
-%
-%In the simplest case, the transfer function can be selected to be the identity function, or another linear function. However, in order for the network to exhibit nonlinear properties, $\phi(\cdot)$ also has to be nonlinear.
-%}
-%
-%\frame{\frametitle{the transfer function}
-%\begin{itemize}
-%	\item historically, binary and piecewise linear transfer functions were
-%		chosen first, in reference to the threshold-like behaviour of biological neurons
-%	\pause
-%	\item smooth, S-shaped (=\alert{sigmoid}) functions behave like
-%		threshold or linear functions, depending on scaling, and can be differentiated
-%	\pause
-%	\item another network class, radial basis function (RBF) networks,
-%		uses Gaussian-shaped transfer functions.
-%\end{itemize}
-%
-%}
-%
-%\frame{\frametitle{commonly used transfer functions}
-%\imgbox{transferfct}{}{\textwidth}
-%}
-%
-
-%%%%
-%\begin{frame}[fragile]
-%\frametitle{better algorithm for backprop (``(mini) batch learning'')}
-%
-%\begin{beamerboxesrounded}[upper=def,lower=block body,width=1.03\textwidth,shadow]{\textbf{back-propagation algorithm:}}
-%\begin{lstlisting}[mathescape]
-%initialise the weights
-%repeat
-%  randomly select samples $(\bfx,\bfz)$ from a mini-batch do
-%  begin
-%     $\bf o = \cl M(\bfw, \bfx)$; forward pass
-%     calculate error $\bfz  - \bf o$ at the output units
-%     for all $w^{(2)}$ compute $\delta_{w^{(2)}}$; backward pass
-%     for all $w^{(1)}$ compute $\delta_{w^{(1)}}$; backward pass continued
-%     sum the delta weights using $\partial E / \partial w_{ij} = \delta_{j} x_{i}$
-%  end
-%  update the weights using summed delta weights
-%until stopping criterion satisfied
-%\end{lstlisting}
-%\end{beamerboxesrounded}
-%\end{frame}
-
-%%%%%%%%%%%%%%
-
-
-
-
-%\begin{frame}
-%\frametitle{Minkowski-R error }
-%We previously assumed Gaussian distribution of the target values by
-%$$
-%p(\epsilon) = { 1 \over \sqrt{2\pi\sigma^2}} \exp\left(-{\epsilon^2\over 2 \sigma^2}\right)
-%$$
-%\pause
-%If we take the more general form
-%$$
-%p(\epsilon) = { R \beta^{1/R} \over 2 \Gamma (1/R)} \exp\left(-\beta |\epsilon|^R\right)
-%$$
-%The likelihood of the prior leads to minimisation of 
-%$$
-% E(\bfw) = {1 \over 2} \sum _{p=1}^{n} \left|\bfz_{p} - \cl M(\bfw, \bfx_{p})\right|^R
-% $$
-%\end{frame}
-
-%%%%%%%%%%%  some ``new'' stuff for classifiers
-
-%\begin{frame}
-%\frametitle{FFNN for classification}
-%Take a set of classification data $\mathcal C_0 = \{(\bfx, z=0)\}$ and  $\mathcal C_1 = \{(\bfx, z=1)\}$
-%
-%If we take an FFNN with sigmoidal outputs
-%$$
-%y = \phi(a) = {1 \over 1 + \exp(-a)}
-%$$
-%we can interpret the output $y(\bfx, \bfw)$ as the conditional
-%probability $p(\mathcal C_0 \mid \bfx)$ while $p(\mathcal C_1 \mid \bfx) = 1-y(\bfx,\bfw)$.
-%
-%\pause
-%But then the likelihood is a Bernoulli distribution
-%$$
-%p(t \mid \bfx, \bfw) = y(\bfx, \bfw)^z \bigl[1-y(\bfx,\bfw)\bigr]^{1-z}
-%$$
-%\pause
-%The negative log likelihood then leads to
-%$$
-%E(\bfw) = -\sum_{p=1}^n \Bigl\{
-%	z_p \log y(\bfx_p, \bfw) + (1 - z_p) \log \bigl[1 - y(\bfx_p, \bfw)\bigl]
-%	\Bigr\}
-%$$
-%Has been shown to lead to better results!
-%\end{frame}
-
-
-
-
 
 \frame{\frametitle{auto-encoder networks}
 \ParBeg{idea:} find compact representation of inputs (unsupervised!)\ by
@@ -1070,20 +880,6 @@ However, you cannot control the representation!
 \bf Caveat: autoencoders do little more than PCA! $\rightarrow$ deep autoencoders
 }
 
-
-
-%
-%\begin{frame}
-%\frametitle{Very recent developments}
-%Deep Learning via Hessian-Free optimisation (J. Martens, ICML 2010)---add a regularisation
-%term to the Hessian, i.e., $B=H+\lambda I$
-%
-%%Krylov Subspace Descent for Deep Learning (O. Vinyals and D. Povey, AISTATS 2012)
-%
-%Deep learning also works by training ordinary backprop ``ad infinitum'' 
-%on \textsl{many} data (Cire\c san et al, 2010)---extend mnist by adding
-%linearly convoluted versions of the images
-%\end{frame}
 
 
 

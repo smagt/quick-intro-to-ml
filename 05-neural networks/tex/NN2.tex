@@ -63,43 +63,6 @@
 
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-
-
-
-%\frame{\frametitle{options for regularising neural networks}
-%\begin{tabular}{ll}
-%	\textbf{Modification} & \textbf{Issues} \\\hline
-%	use \alert{small enough} network & $\ominus$ loses generalisation capabilities\\[2mm]
-%	\pause
-%	early stopping & $\ominus$ need extra data for testing\\
-%	& $\ominus$ which data to choose for cross-validation?\\[2mm]
-%	\pause
-%	introduce \alert{weight decay} term & $\ominus$ weights are regularised towards 0!\\[2mm]
-%	add Gaussian noise to inputs & $\ominus$ is it realistic?  \\
-%	& $\ominus$ increases training time\\[2mm]
-%	\pause
-%	full Bayesian treatment & $\ominus$ nonlinear transfer functions prohibit that
-%\end{tabular}
-%}
-%
-%
-%
-
-
-
 \begin{frame}
 \frametitle{how did deep learning evolve?}
 
@@ -237,99 +200,6 @@ Different high-level features share lower-level features.
 \emph{Understanding and Improving Deep Learning Algorithms},
 Yoshua Bengio, ML Google Distinguished Lecture, 2010}
 \end{frame}
-
-
-
-%\begin{frame}
-%\frametitle{back-propagation problems for deep networks}
-%
-%\begin{itemize}
-%\item requires many labeled training data \\
-%	\textcolor{white}{(yet since 1995 we have much bigger labeled data sets)}
-%\item learning time does not scale well for multiple hidden layers\\
-%	\textcolor{white}{(and computers became MUCH faster by GPUs)}
-%\item initialising weights is important \\
-%	\textcolor{white}{(so new methods were developed)}
-%\end{itemize}
-%\end{frame}
-%
-
-%\begin{frame}
-%\frametitle{back-propagation problems for deep networks}
-%
-%\begin{itemize}
-%\item requires many labeled training data \\
-%	(yet since 1995 we have much bigger labeled data sets)
-%\item learning time does not scale well for multiple hidden layers\\
-%	 (and computers became MUCH faster by GPUs)
-%\item initialising weights is important \\
-%	(so new methods were developed)
-%\end{itemize}
-%\end{frame}
-
-%%%%%%%%%%%%
-
-
-
-%\vspace{1cm}
-%
-%Recent research [Hinton et al., 2006] uses 
-%\emph{unsupervised pre-training} by Restricted 
-%Boltzmann Machines to get into vicinity of the minimum.
-%
-%\vspace{1cm}
-%
-%Various kinds of unsupervised pre-training:
-%\begin{itemize}
-%\item RBM (Restricted Boltzmann Machines)
-%\item (tied) Autoencoders and variants (denoising AE, sparse AE)
-%\item Sparse coding
-%\item \dots
-%\end{itemize}
-%\end{frame}
-%
-%
-%\begin{frame}
-%\frametitle{restricted Boltzmann machine}
-%Start by learning a generative model of the input data that has one layer of latent variables
-%\vskip1cm
-%\centerline{\includegraphics[width=6cm]{pics/RBM.pdf}}
-%
-%Then use the vector of latent variable activities as data for training a second generative model.
-%
-%\end{frame}
-%
-%
-%\begin{frame}
-%\frametitle{restricted Boltzmann machine}
-%for a hidden unit $h$ and a visible unit $v$ (bias $b$, weight $w$) we compute
-%$$
-%P(h_j = 1 \mid v) = \sigma \bigl(b_j + \sum_{i=1}^m w_{i,j} v_i \bigr), \quad  \textrm{$\sigma$ is sigmoid function}
-%$$
-%$$
-%P(v_i= 1 \mid h) = \sigma \bigl(a_i + \sum_{j=1}^n w_{i,j} h_j \bigr), \quad  \textrm{\textcolor{white}{,s is sigmoid function}}
-%$$
-%we optimise
-%$
-%\argmax_W \prod_{v \in V} P(v)
-%$
-%e.g.\ using contrastive divergence:
-%\pause
-%\centerline{\includegraphics[width=6cm]{pics/contrastivedivergence.png}}
-%
-%\end{frame}
-%
-%
-%\begin{frame}
-%\frametitle{pretraining with RBMs}
-%We can combine the stack of generative models into one.  We can prove that adding a layer results in a lower bound on the log probability of the training data.
-%
-%Then add an output layer, and train the stack with back propagation.
-%\end{frame}
-%
-%
-%\begin{frame}
-%\frametitle{loose remarks}
 
 
 
@@ -472,36 +342,6 @@ Which statements are true?
 %%%%%%%%%%%%%%
 
 
-
-
-
-%
-%\begin{frame}
-%\frametitle{stochastic gradient descent}
-%If the dataset is highly redundant, the gradient on the first half is almost identical to the gradient on the second half.
-%\begin{itemize}
-%\item So instead of computing the full gradient, update the weights using the gradient on the first half and then get a gradient for the new weights on the second half.
-%\item  The extreme version of this approach updates weights after each case. It is called ``online.''
-%\end{itemize}
-% Mini-batches are usually better than online:
-%\begin{itemize}
-%\item Less computation is used updating the weights.
-%\item Computing the gradient for many cases simultaneously uses matrix-matrix multiplies which are very efficient, especially on GPUs
-%\end{itemize}
-% Mini-batches need to be balanced for classes!
-%\end{frame}
-%
-%
-
-
-
-
-
-
-
-
-
-
 \begin{frame}
 \frametitle{initialising the weights}
 If two hidden units have exactly the same bias and exactly the same incoming and outgoing weights, they will always get exactly the same gradient.
@@ -586,59 +426,6 @@ Furthermore,
 \item use a second-order method (also here, see the ``optimisation'' lecture).
 \end{enumerate}
 \end{frame}
-
-
-
-%\begin{frame}
-%\frametitle{the momentum method}
-%\begin{columns}
-%\begin{column}{6cm}
-%$$\bfu(t) = \beta \bfu(t-1) - \alpha {\partial E\over\partial \bfw}(t)$$
-%\end{column}
-%\begin{column}{5cm}
-%The effect of the gradient is to increment the previous velocity. The velocity also decays by $\beta$ which is slightly less than 1.
-%\end{column}
-%\end{columns}
-%\vskip1cm
-%\begin{columns}
-%\begin{column}{6cm}
-%\begin{eqnarray*}
-%\Delta\bfw(t) &=& \bfu(t)\\
-%&=&  \beta \bfu(t-1) - \alpha {\partial E\over\partial \bfw}(t) \\
-%&=&  \beta \Delta\bfw(t-1) - \alpha {\partial E\over\partial \bfw}(t) 
-%\end{eqnarray*}
-%\end{column}
-%\begin{column}{5cm}
-%The weight change is equal to the current velocity.
-%
-%The weight change can be expressed in terms of the previous weight change and the current gradient.
-%\end{column}
-%\end{columns}
-%
-%\end{frame}
-%
-
-
-
-
-%\begin{frame}
-%\frametitle{the behaviour of the momentum method}
-%$$\bfu(t) = \beta \bfu(t-1) - \alpha {\partial E\over\partial \bfw}(t)$$
-%$$
-%\bfu(\infty) = {1\over 1-\beta} \left(-\alpha {\partial E \over \partial \bfw}\right)
-%$$
-%
-%If the momentum $\beta$ is close to 1, this is much faster than simple gradient descent.
-%
-%At the beginning of learning there may be very large gradients.
-%\begin{itemize}
-%\item So it pays to use a small momentum (e.g., 0.5).
-%\item Once the large gradients have disappeared and the weights are stuck in a ravine the momentum can be smoothly raised to its final value (e.g.\ 0.9 or even 0.99)
-%\end{itemize}
-%This allows us to learn at a rate that would cause divergent oscillations without the momentum.
-%
-%\end{frame}
-
 
 
 
